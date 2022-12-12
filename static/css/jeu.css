@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: SimSun, STHeiti, "Microsoft YaHei";
+}
+html,body {
+    height: 100%;
+}
+nav {
+    height: 40px;
+    margin: 14px;
+    margin-bottom: 4px;
+}
+nav #logo {
+    left: 5%;
+    height: 40px;
+    position: absolute;
+}
+nav ul {
+    position: absolute;
+    right: 2%;
+}
+nav ul li {
+    list-style: none;
+    float: left;
+    
+}
+@media screen and (min-width: 950px) { 
+    nav ul li {
+        font-size: 19px;
+        margin: 9px;
+    }
+}
+@media screen and (max-width: 640px) {
+    nav ul li {
+        font-size: 17px;
+        margin-left: 3px;
+        margin-top: 12px;
+    }
+}
+nav ul li #satellite {
+    height: 25px;
+    vertical-align: middle;
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+nav ul li a:hover {
+    color: #F4606C;
+}
+
+#app {
+    width: 100%;
+    height: 0;
+    padding-bottom: 170%;
+    background-image: url(../images/fza.jpg);
+    background-size: cover;
+}
+#app .so {
+    position: absolute;
+    right: 3%;
+    margin-top: 12px;
+ 
+}
+#app .so #suo {
+    width: 120px;
+    height: 21px;
+}
+#app .so #key {
+    height: 25px;
+    width: 40px;
+}
+#app table a:hover {
+    color: deepskyblue;
+}
+table {
+    margin-top: 57px;
+    position: absolute;
+    right: 25%;
+    box-shadow: 0 0 5px gray;
+    color: #FFF;
+    background: rgba(0, 0, 0, 0.4);
+}
+@media screen and (min-width: 950px) { 
+    table {
+        width: 50%;
+        left: 25%;
+    }
+    table tr a {
+        font-size: 17px;
+    }
+} 
+/* css注释：设置了浏览器宽度不小于1201px时 abc 显示1200px宽度 */ 
+
+@media screen and (max-width: 640px) { 
+    table {
+        width: 80%;
+        left: 10%;
+    }
+    table tr a {
+        font-size: 15px;
+    }
+} 
+table tr {
+    height: 34px;
+    padding-top: 17px;
+}
+table tr a {
+    color: #FFF;
+    font-weight: 500;
+}
+
+#app .content {
+    width: 78%;
+    max-width: 800px;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 27px;
+    background-color:  rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 9px gray;
+}
+@media screen and (min-width: 950px) { 
+    #app .content {
+        padding: 40px;
+    }
+    #app .content p {
+        line-height: 1.9;
+        text-indent: 2em;
+        margin: 9px;
+    }
+} 
+@media screen and (max-width: 640px) {
+    #app .content {
+        padding: 14px;
+    }
+    #app .content p {
+        line-height: 1.4;
+        text-indent: 1em;
+        margin: 7px;
+    }
+}
+#app .content p a:defined {
+    color: deepskyblue;
+}
+#app .content p a:hover {
+    color: deeppink;
+}
+#app .content img {
+    display: block;
+    box-shadow: 0 0 10px #555;
+    border-radius: 6px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 14px;
+    margin-bottom: 16px;
+    -webkit-box-shadow: 0 0 10px #555;
+}
+
+footer {
+    height: 21px;
+    text-align: center;
+    font-size: 13px;
+    font-family: "微软雅黑";
+}
+footer a:hover {
+    color: gray;
+}

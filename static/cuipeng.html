@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>遥远的星辰</title>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/cuipeng.css">
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <script src="../lib/layui/layui.js"></script>
+    <script src="../lib/axios.min.js"></script>
+</head>
+<body>
+    <div id="edit">
+        <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md2">
+                    <div class="layui-card">
+                        <div class="layui-card-header">良辰美景</div>
+                        <div class="layui-card-body">
+                            <ul class="site-dir layui-layer-wrap" style="display: block;">
+                                <li><a onclick="flip(1)"><cite>1.彩虹不遥远</cite></a></li>
+                                <li><a onclick="flip(2)"><cite>2.散步雨中的长街</cite></a></li>
+                                <li><a onclick="flip(3)"><cite>3.日全食</cite></a></li>
+                                <li><a onclick="flip(4)"><cite>4.花</cite></a></li>
+                                <li><a onclick="flip(5)"><cite>5.海市蜃楼</cite></a></li>
+                                <li><a onclick="flip(6)"><cite>6.是夜星光璀璨</cite></a></li>
+                                <li><a onclick="flip(7)"><cite>7.和风</cite></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">悄然心碎</div>
+                        <div class="layui-card-body">
+                            <ul class="site-dir layui-layer-wrap" style="display: block;">
+                                <li><a onclick="flip(8)"><cite>1.归途</cite></a></li>
+                                <li><a onclick="flip(9)"><cite>2.伙伴</cite></a></li>
+                                <!-- <li><a onclick="flip(10)"><cite>3.痛恨</cite></a></li>
+                                <li><a onclick="flip(11)"><cite>4.电影</cite></a></li>
+                                <li><a onclick="flip(12)"><cite>5.大餐</cite></a></li>
+                                <li><a onclick="flip(13)"><cite>6.足球课</cite></a></li>
+                                <li><a onclick="flip(14)"><cite>7.爬山</cite></a></li>
+                                <li><a onclick="flip(15)"><cite>8.拒绝</cite></a></li>
+                                <li><a onclick="flip(16)"><cite>9.小店</cite></a></li>
+                                <li><a onclick="flip(17)"><cite>10.</cite></a></li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md10">
+                    <div style="text-align: center;">
+                        <div class="content" id="article"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="am">
+        <h2>{{a.chapter}}</h2><br>
+        <span>{{a.author}} {{a.time}}</span>
+        <br><br>
+        {{a.article[i]}}
+        <br/>
+        <a onclick="prev()">上一页</a>
+        <a onclick="next()">下一页</a>
+        &nbsp;{{i+1}}/{{a.article.length}}
+    </script>
+    <script>
+        var id = 0;
+        var i = 0;
+        var a = {};
+        layui.use(['element', 'laytpl'], function(){
+            var element = layui.element
+            ,laytpl = layui.laytpl;
+            var getTpl = am.innerHTML
+            ,article = document.getElementById('article');
+            axios.get('/flash/a/'+id).then(res=>{
+                a = res.data;
+                laytpl(getTpl).render(a, function(html){
+                    article.innerHTML = html;
+                })
+            })
+        })
+        function flip(page){
+            this.id = page;
+            axios.get('/flash/a/'+this.id).then(res=>{
+                this.a = res.data;
+                this.i = 0;
+                layui.use('laytpl', function(){
+                    laytpl = layui.laytpl;
+                    var getTpl = am.innerHTML
+                    ,article = document.getElementById('article');
+                    laytpl(getTpl).render(a, function(html){
+                        article.innerHTML = html;
+                    })
+                }) 
+            })
+        }
+        function prev(){
+            if (this.i > 0){
+                this.i -=1;
+                layui.use('laytpl', function(){
+                    laytpl = layui.laytpl;
+                    var getTpl = am.innerHTML
+                    ,article = document.getElementById('article');
+                    laytpl(getTpl).render(a, function(html){
+                        article.innerHTML = html;
+                    })
+                }) 
+            }
+        }
+        function next(){
+            if (this.i < this.a.article.length-1){
+                this.i +=1;
+                layui.use('laytpl', function(){
+                    laytpl = layui.laytpl;
+                    var getTpl = am.innerHTML
+                    ,article = document.getElementById('article');
+                    laytpl(getTpl).render(a, function(html){
+                        article.innerHTML = html;
+                    })
+                }) 
+            }
+        }
+    </script>
+</body>
+</html>

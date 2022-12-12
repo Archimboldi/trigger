@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>遥远的星辰</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/jeu.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.6/vue-router.min.js"></script>
+    <script src="/lib/axios.min.js"></script>
+
+</head>
+<body>
+    <nav>
+        <a href="/"><img src="images/star.png" id="logo"></a>
+        <ul>
+            <li><a href="/">和你玩耍</a></li>
+            <li><a href="https://space.bilibili.com/31965960" target="_blank">「Film a moment」</a></li>
+            <li><a href="/writing/">跑着写小说</a></li>
+            <li><a href="zaixia.html"><img src="./images/satellite.png" id="satellite">联系我</a></li>
+        </ul>
+    </nav>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+    <footer>
+        &copy;2019-2021&nbsp;&nbsp;&nbsp;<a href="zaixia.html">在下</a>&nbsp;&nbsp;<a href="http://beian.miit.gov.cn/">陕ICP备19025420号</a>
+    </footer>
+    <script>
+        var alist = {
+            template: `<div>
+                <div class="so">
+                    <input id="suo" type="text" v-model="kw" v-focus @keyup.enter="so">
+                    <input id="key" type="button" value="检索" @click="so()">
+                </div>
+                <table cellpadding=7 cellspacing=5>                  
+                    <tr v-for="item in search(keyword)" :key="item.id">        
+                        &nbsp;<td><router-link :to="'/b/'+item.id">{{item.title}}</router-link></td>
+                        <td align="center" v-text="item.time"></td>
+                    </tr>
+                </table>
+            </div>`,
+            data() {
+                return {
+                    kw: '',
+                    keyword: '',
+                    list: [],
+                }
+            },
+            methods: {
+                so() {
+                    this.keyword = this.kw
+                },
+                search(keyword) {
+                    return newList = this.list.filter(item => {
+                        if (item.title.includes(keyword)) {
+                            return item
+                        }
+                    })
+                },
+                getList() {
+                    axios.get('/api/get').then((res) => {
+                        if(res.data.length > this.list.length){
+                            this.list = res.data
+                        }
+                    })
+                },
+            },
+            created() {
+                this.getList()
+            },
+        }
+        var article = {
+            template: `<div>
+                <a href="/" onClick="javascript :history.back(-1);" style="margin-left:19px">返回列表</a>
+                <div style="text-align: center;"><div class="content" v-html="a1"></div></div>
+            </div>`,
+            data: function() {
+                return {
+                    a1: '',
+                    id: this.$route.params.id
+                }
+            },
+            methods: {
+                viewDetails() {
+                    axios.get('/rush/b/'+this.id).then((res) => {
+                        this.a1 = res.data
+                    })
+                }
+            },
+            created() {
+                this.viewDetails()
+            }
+        }
+ 
+        var router = new VueRouter({
+            mode: 'hash',
+            routes: [
+                { path: '/', component: alist },
+                { path: '/b/:id', component: article }
+            ]
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            router: router,
+        })
+    </script>
+</body>
+
+</html>

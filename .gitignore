@@ -1,5 +1,5 @@
 /target
 *.lock
 /*.pem
-/static
-/db
+
+
